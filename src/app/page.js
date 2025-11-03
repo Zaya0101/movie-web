@@ -1,4 +1,5 @@
 import MovieList from "./_components/MovieList";
+import { Footer } from "./_features/Footer";
 import { Header } from "./_features/Header";
 import { HeroSection } from "./_features/home/HeroSection";
 
@@ -7,9 +8,10 @@ export default function Page() {
     <div className="w-full max-w-[1440px] mx-auto">
       <Header />
       <HeroSection />
-      <MovieList type="upcoming" title="Upcoming" />
-      <MovieList type="popular" title="Popular" />
-      <MovieList type="top_rated" title="Top Rated" />
+      <MovieList type="upcoming" />
+      <MovieList type="popular" />
+      <MovieList type="top_rated" />
+      <Footer />
     </div>
   );
 }

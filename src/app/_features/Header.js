@@ -2,7 +2,7 @@ import MovieZIcon from "../_icons/MovieZIcon";
 
 export function Header() {
   return (
-    <div className="flex  justify-between items-center max-w-[1440px] h-[50px] px-[20px] mx-auto">
+    <div className="flex  justify-between items-center max-w-[1440px] h-[50px] px-[21px] mx-auto">
       <div className="flex items-center gap-2 text-indigo-500 font-semibold text-lg">
         <MovieZIcon />
         <span className="italic">Movie Z</span>
@@ -21,7 +21,7 @@ export function Header() {
         </div>
       </div>
       <button className="p-2 rounded-md hover:bg-gray-50 transition">
-        <img className="w-[36px] h-[36px]" src="/moon.png" />
+        <img className="w-[35px] h-[35px]" src="/moon.png" />
       </button>
     </div>
   );
