@@ -46,16 +46,19 @@ export default function MovieList({ type }) {
           <img className="w-[15px] h-[15px]" src="/arrow continue.png" />
         </button>
       </div>
-      <div className="flex flex-wrap gap-5 cursor-pointer rounded-md">
+      <div className="flex flex-wrap gap-5 ">
         {movieData.slice(0, 10).map((movie, index) => (
-          <div key={index}>
+          <div
+            key={index}
+            onClick={() => router.push(`/moviesDetail/${movie.id}`)}
+            className="cursor-pointer rounded-2xl overflow-hidden shadow-gray-500 hover:shadow-md transition"
+          >
             <div
-              className="w-[230px] h-[340px] bg-cover bg-center "
+              className="w-[230px] h-[340px] bg-cover bg-center rounded-t-2xl"
               style={{
                 backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`,
               }}
             ></div>
-
             <div className="w-[230px] h-[94px] bg-gray-100 ">
               <div className=" pt-1 px-2 gap-1">
                 <span className="text-yellow-400 text-[14px]">★</span>

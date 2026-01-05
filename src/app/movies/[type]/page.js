@@ -1,10 +1,9 @@
 "use client";
 
-import { Header } from "../../_features/Header";
-import { Footer } from "../../_features/Footer";
+import { Header } from "@/app/_features/Header";
+import { Footer } from "@/app/_features/Footer";
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
-
+import { useParams, useRouter } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
@@ -20,113 +19,116 @@ const BASE_URL = "https://api.themoviedb.org/3";
 export default function MoviePage() {
   const [movieData, setMovieData] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
   const { type } = useParams();
-
-  const getData = async (pageNumber = 1) => {
+  const router = useRouter();
+  const getData = async () => {
     const data = await fetch(
-      `${BASE_URL}/movie/${type}?language=en-US&page=${pageNumber}`,
+      `${BASE_URL}/movie/${type}?language=en-US&page=${page}`,
       {
         headers: {
           "Content-Type": "application/json",
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY",
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY",
         },
       }
     );
     const result = await data.json();
+
     setMovieData(result.results);
-    setTotalPages(result.total_pages);
+    setTotalPage(result.total_page);
   };
 
   useEffect(() => {
-    getData(page);
+    getData();
   }, [page]);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setPage(newPage);
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }
+  const handleNextdoublePageButton = () => {
+    setPage(page + 2);
   };
-
-  const getPageNumbers = () => {
-    const pages = [];
-    const maxVisible = 5;
-    const start = Math.max(1, page - 2);
-    const end = Math.min(totalPages, start + maxVisible - 1);
-
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-    return pages;
+  const handleNextPageButton = () => {
+    setPage(page + 1);
+  };
+  const handlePreviousPageButton = () => {
+    setPage(page - 1);
   };
 
   return (
     <div>
       <Header />
-
-      <div className="w-full max-w-[1440px] mx-auto overflow-hidden py-[50px] px-[90px] flex flex-col flex-wrap">
+      <div className=" overflow-hidden mx-auto w-full max-w-[1440px] py-[50px] px-[90px] flex flex-col flex-wrap">
         <div className="flex justify-between pb-7">
-          <h2 className="text-2xl font-semibold capitalize">
+          <h2 className="text-2xl font-semibold">
             {type.replace("_", " ").replace(/\b\w/g, (c) => c.toUpperCase())}
           </h2>
         </div>
-
-        <div className="flex flex-wrap gap-5 rounded-md">
+        <div className="flex flex-wrap gap-5">
           {movieData.map((movie, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              onClick={() => router.push(`/moviesDetail/${movie.id}`)}
+              className="cursor-pointer rounded-2xl overflow-hidden shadow-gray-600 hover:shadow-md transition"
+            >
               <div
-                className="w-[230px] h-[340px] bg-cover bg-center rounded-md shadow-md"
+                className="w-[230px] h-[340px] rounded-t-2xl bg-cover bg-center "
                 style={{
                   backgroundImage: `url(https://image.tmdb.org/t/p/original/${movie.poster_path})`,
                 }}
               ></div>
 
-              <div className="w-[230px] h-[94px] bg-gray-100 rounded-b-md">
-                <div className="flex pt-1 px-2">
+              <div className="w-[230px] h-[94px] bg-gray-100 ">
+                <div className=" pt-1 px-2 gap-1">
                   <span className="text-yellow-400 text-[14px]">★</span>
-                  <span className="text-[14px]">{movie.vote_average}</span>
+                  <span className="text-[15px]">{movie.vote_average}</span>
                   <span className="text-[14px] text-gray-400">/10</span>
                 </div>
-                <h1 className="px-2 text-sm font-medium">{movie.title}</h1>
+                <h1 className="px-2">{movie.title}</h1>
               </div>
             </div>
           ))}
         </div>
-
-        <div className="flex justify-center mt-10">
+        <div className="flex mt-10 ml-130 ">
           <Pagination>
             <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href="#"
-                  onClick={() => handlePageChange(page - 1)}
-                />
+              <PaginationItem
+                onClick={() => {
+                  handlePreviousPageButton();
+                }}
+              >
+                <PaginationPrevious href="#" />
               </PaginationItem>
-              {getPageNumbers().map((num) => (
-                <PaginationItem key={num}>
-                  <PaginationLink
-                    href="#"
-                    isActive={page === num}
-                    onClick={() => handlePageChange(num)}
-                  >
-                    {num}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-              {page < totalPages - 2 && <PaginationEllipsis />}
               <PaginationItem>
-                <PaginationNext
-                  href="#"
-                  onClick={() => handlePageChange(page + 1)}
-                />
+                <PaginationLink href="#" isActive>
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+              <PaginationItem
+                onClick={() => {
+                  handleNextPageButton();
+                }}
+              >
+                <PaginationLink href="#">{page + 1}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem
+                onClick={() => {
+                  handleNextdoublePageButton();
+                }}
+              >
+                <PaginationLink href="#">{page + 2}</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+              <PaginationItem
+                onClick={() => {
+                  handleNextPageButton();
+                }}
+              >
+                <PaginationNext href="#" />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
       </div>
-
       <Footer />
     </div>
   );
