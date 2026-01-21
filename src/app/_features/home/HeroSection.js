@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -16,6 +17,7 @@ const BASE_URL = "https://api.themoviedb.org/3";
 export function HeroSection() {
   const [api, setApi] = React.useState(null);
   const [movieData, setMovieData] = useState([]);
+  const router = useRouter();
 
   const getData = async () => {
     const data = await fetch(
@@ -26,7 +28,7 @@ export function HeroSection() {
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY",
         },
-      }
+      },
     );
     const result = await data.json();
 
@@ -73,7 +75,10 @@ export function HeroSection() {
                       </p>
                     </div>
 
-                    <Button className="bg-white text-black font-semibold  rounded-md hover:bg-gray-200 w-[145px] h-[40px] text-lg">
+                    <Button
+                      onClick={() => router.push(`/moviesDetail/${item.id}`)}
+                      className="bg-white text-black font-semibold rounded-md hover:bg-gray-200 w-[145px] h-[41px] text-lg"
+                    >
                       ▶ Watch Trailer
                     </Button>
                   </div>

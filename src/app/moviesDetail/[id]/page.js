@@ -9,7 +9,7 @@ const IMAGE_URL = "https://image.tmdb.org/t/p/original";
 const TOKEN =
   "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY";
 
-export default function MovieDetails() {
+export default function MoviesDetails() {
   const { id } = useParams();
   const [movie, setMovie] = useState(null);
   const [videos, setVideos] = useState([]);
@@ -32,7 +32,7 @@ export default function MovieDetails() {
       `${BASE_URL}/movie/${id}/videos?language=en-US`,
       {
         headers: { Authorization: TOKEN },
-      }
+      },
     );
     const data = await result.json();
     setVideos(data.results);
@@ -43,14 +43,14 @@ export default function MovieDetails() {
       `${BASE_URL}/movie/${id}/credits?language=en-US`,
       {
         headers: { Authorization: TOKEN },
-      }
+      },
     );
     const data = await result.json();
     setStars(data.cast ? data.cast.slice(0, 5) : []);
     if (data.crew) {
       const directors = data.crew.filter((person) => person.job === "Director");
       const writers = data.crew.filter((person) =>
-        ["Writer", "Screenplay", "Story"].includes(person.job)
+        ["Writer", "Screenplay", "Story"].includes(person.job),
       );
       setDirector(directors);
       setWriters(writers);
@@ -60,7 +60,7 @@ export default function MovieDetails() {
   const getSimilar = async () => {
     const result = await fetch(
       `${BASE_URL}/movie/${id}/similar?language=en-US&page=1`,
-      { headers: { Authorization: TOKEN } }
+      { headers: { Authorization: TOKEN } },
     );
     const data = await result.json();
     setSimilar(data.results ? data.results.slice(0, 6) : []);
@@ -76,7 +76,7 @@ export default function MovieDetails() {
   if (!movie) return <p>Loading...</p>;
 
   const trailer = videos.find(
-    (v) => v.type === "Trailer" && v.site === "YouTube"
+    (v) => v.type === "Trailer" && v.site === "YouTube",
   );
 
   return (

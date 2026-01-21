@@ -21,7 +21,7 @@ export default function SearchPage() {
       setLoading(true);
       const result = await fetch(
         `${BASE_URL}/search/movie?query=${query}&language=en-US`,
-        { headers: { Authorization: TOKEN } }
+        { headers: { Authorization: TOKEN } },
       );
       const data = await result.json();
       setMovies(data.results || []);
