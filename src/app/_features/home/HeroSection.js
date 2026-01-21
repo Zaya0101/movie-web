@@ -11,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Image from "next/image";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -46,10 +47,12 @@ export function HeroSection() {
             <CarouselItem key={index}>
               <Card className="border-0 shadow-none relative">
                 <CardContent>
-                  <img
+                  <Image
                     src={`https://image.tmdb.org/t/p/original${item.backdrop_path}`}
                     alt={item.title}
                     className="w-full h-[600px] object-cover"
+                    height={600}
+                    width={1440}
                   />
 
                   <div className="absolute bottom-[158px] md:left-[140px] text-white w-[404px] h-[264px]">

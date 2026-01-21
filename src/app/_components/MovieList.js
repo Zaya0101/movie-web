@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 
@@ -18,7 +19,7 @@ export default function MovieList({ type }) {
           Authorization:
             "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxMjI5ZmNiMGRmZTNkMzc2MWFmOWM0YjFjYmEyZTg1NiIsIm5iZiI6MTc1OTcxMTIyNy43OTAwMDAyLCJzdWIiOiI2OGUzMGZmYjFlN2Y3MjAxYjI5Y2FiYmIiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.M0DQ3rCdsWnMw8U-8g5yGXx-Ga00Jp3p11eRyiSxCuY",
         },
-      }
+      },
     );
     const result = await data.json();
 
@@ -43,7 +44,13 @@ export default function MovieList({ type }) {
           className="text-xl flex items-center gap-3 justify-center rounded-md cursor-pointer hover:bg-gray-200 w-[120px] h-[35px]"
         >
           see more
-          <img className="w-[15px] h-[15px]" src="/arrow continue.png" />
+          <Image
+            className="w-[15px] h-[15px]"
+            src="/arrow continue.png"
+            alt=""
+            height={15}
+            width={15}
+          />
         </button>
       </div>
       <div className="flex flex-wrap gap-5 ">

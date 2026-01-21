@@ -14,6 +14,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Image from "next/image";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/w500";
@@ -47,7 +48,7 @@ export default function Page() {
         `${BASE_URL}/discover/movie?language=en&with_genres=${genreId}&page=${page}`,
         {
           headers: { Authorization: TOKEN },
-        }
+        },
       );
       const data = await response.json();
       setMovies(data.results);
@@ -106,13 +107,15 @@ export default function Page() {
                 onClick={() => router.push(`/moviesDetail/${movie.id}`)}
                 className="cursor-pointer rounded-2xl overflow-hidden shadow-gray-500 hover:shadow-md transition"
               >
-                <img
+                <Image
                   src={
                     movie.poster_path
                       ? `${IMAGE_URL}${movie.poster_path}`
                       : "/no-poster.png"
                   }
                   alt={movie.title}
+                  height={244}
+                  width={1440}
                   className="w-full h-[244px] object-cover rounded-t-2xl"
                 />
                 <div className="bg-gray-100 p-2 h-[87px] rounded-b-2xl">

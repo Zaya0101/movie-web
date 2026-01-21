@@ -9,6 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
 import MovieZIcon from "../_icons/MovieZIcon";
+import Image from "next/image";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const TOKEN =
@@ -46,7 +47,7 @@ export function Header() {
     const delay = setTimeout(async () => {
       const res = await fetch(
         `${BASE_URL}/search/movie?query=${searchValue}&language=en-US`,
-        { headers: { Authorization: TOKEN } }
+        { headers: { Authorization: TOKEN } },
       );
       const data = await res.json();
       setResults(data.results || []);
@@ -73,7 +74,13 @@ export function Header() {
               className="flex items-center gap-1 border border-gray-300 rounded-md px-3 py-2 hover:bg-gray-50 transition text-sm"
               onClick={() => router.push("/genres")}
             >
-              <img src="/genre.svg" className="w-4 h-4" />
+              <Image
+                src="/genre.svg"
+                className="w-4 h-4"
+                alt=""
+                height={4}
+                width={4}
+              />
               <span>Genre</span>
             </button>
           </DropdownMenuTrigger>
@@ -89,7 +96,12 @@ export function Header() {
                   onClick={() => router.push(`/genres/${genre.id}`)}
                 >
                   {genre.name}
-                  <img src="arrow continue.png" />
+                  <Image
+                    src="/icons/arrow_continue.png"
+                    alt=""
+                    height={1}
+                    width={1}
+                  />
                 </Badge>
               ))}
             </div>
@@ -115,10 +127,12 @@ export function Header() {
                     className="flex items-center gap-3 p-2 hover:bg-gray-100 cursor-pointer transition"
                     onClick={() => router.push(`./moviesDetail/${movie.id}`)}
                   >
-                    <img
+                    <Image
                       src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
                       alt={movie.title}
                       className="w-[41px] h-[60px] object-cover rounded"
+                      height={60}
+                      width={41}
                     />
                     <span className="text-sm font-medium text-gray-800">
                       {movie.title}
@@ -136,7 +150,13 @@ export function Header() {
       </div>
 
       <button className="p-2 rounded-md hover:bg-gray-50 transition">
-        <img className="w-[35px] h-[35px]" src="/moon.png" />
+        <Image
+          className="w-[35px] h-[35px]"
+          src="/moon.png"
+          alt=""
+          height={35}
+          width={35}
+        />
       </button>
     </div>
   );

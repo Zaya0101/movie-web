@@ -42,10 +42,10 @@ export default function SearchPage() {
           {movies.map((movie) => (
             <div
               key={movie.id}
-              onClick={() => router.push(`/moviesDetail/${movie.id}`)}
+              onClick={() => router.push(`/moviesDetails/${movie.id}`)}
               className="text-center cursor-pointer hover:opacity-80 transition"
             >
-              <img
+              <Image
                 src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
                 alt={movie.title}
                 className="rounded-lg"

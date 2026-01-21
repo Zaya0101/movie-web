@@ -3,6 +3,7 @@ import { Header } from "@/app/_features/Header";
 import { Footer } from "@/app/_features/Footer";
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
 const BASE_URL = "https://api.themoviedb.org/3";
 const IMAGE_URL = "https://image.tmdb.org/t/p/original";
@@ -100,10 +101,12 @@ export default function MoviesDetails() {
           </div>
 
           <div className="flex flex-row gap-9">
-            <img
+            <Image
               src={`${IMAGE_URL}${movie.poster_path}`}
               alt={movie.title}
               className="w-[300px] h-[450px] rounded-xl"
+              height={450}
+              width={300}
             />
             {trailer ? (
               <iframe
@@ -168,7 +171,7 @@ export default function MoviesDetails() {
               className="w-[200px] cursor-pointer"
               onClick={() => router.push(`/moviesDetail/${movie.id}`)}
             >
-              <img
+              <Image
                 src={
                   movie.poster_path
                     ? `${IMAGE_URL}${movie.poster_path}`
@@ -176,6 +179,8 @@ export default function MoviesDetails() {
                 }
                 alt={movie.title}
                 className="rounded-lg w-full h-[300px] object-cover"
+                height={300}
+                width={1440}
               />
               <p className="text-sm mt-2">{movie.title}</p>
             </div>
